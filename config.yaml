@@ -5,7 +5,7 @@ Ocotlan 2016 Zone B: { scale_meters: 100, scale_pixels: 453, ncolors: 4 }
 
 Mitla 1966 Piedmont: { scale_meters: 500, scale_pixels: 782, ncolors: 5 }
 Mitla 1988 Piedmont: { scale_meters: 500, scale_pixels: 782, ncolors: 6 }
-Mitla 2016 Piedmont: { scale_meters: 500, scale_pixels: 782, ncolors: 7 }
+Mitla 2016 Piedmont: { scale_meters: 500, scale_pixels: 782, ncolors: 6 }
 
 Mitla HiAll 1966: { scale_meters: 500, scale_pixels: 784, ncolors: 6 }
 Mitla HiAll 1988: { scale_meters: 500, scale_pixels: 784, ncolors: 8 }
@@ -17,7 +17,7 @@ Mitla Low All 1966: { scale_meters: 500, scale_pixels: 775, ncolors: 5 }
 
 San Gab Mtn 1966: { scale_meters: 500, scale_pixels: 819, ncolors: 8 }
 San Gab Mtn 2016: { scale_meters: 500, scale_pixels: 819, ncolors: 6 }
-San Gab South Pied 1966: { scale_meters: 500, scale_pixels: 819, ncolors: 7 }
+San Gab South Pied 1966: { scale_meters: 500, scale_pixels: 819, ncolors: 6 }
 San Gab South Pied 1988: { scale_meters: 500, scale_pixels: 819, ncolors: 7 }
 San Gab South Pied 2016: { scale_meters: 500, scale_pixels: 819, ncolors: 8 }
 San Gab North Pied 1966: { scale_meters: 500, scale_pixels: 819, ncolors: 8 }
