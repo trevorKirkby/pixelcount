@@ -12,6 +12,13 @@ from heapq import nlargest
 with open("config.yaml") as f:
 	config = yaml.load(f)
 
+def count_pixels(filepath, total_colors):
+	source = Image.open(filepath)
+	pixels = np.array(source)
+	flattened = (data[:,:,0].astype(np.uint32) << 16) | (data[:,:,1].astype(np.uint32) << 8) | data[:,:,2].astype(np.uint32)
+	uniques = np.unique(flattened, return_counts = 1)
+	print uniques
+
 def readimage(filepath, colors):
 	values = {}
 	adjusted_values = {}
