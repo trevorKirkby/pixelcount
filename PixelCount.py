@@ -80,4 +80,5 @@ if __name__ == "__main__":
 	plt.pie(sizes, labels=labels, colors=colors,autopct="%1.1f%%",startangle=90)
 	plt.axis("equal")
 	plt.suptitle(name, fontsize='x-large')
+	plt.savefig(os.path.join('charts', name + '.png'))
 	plt.show()
