@@ -4,11 +4,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 from math import sqrt
 from os import path
+from heapq import nlargest
 
 with open("config.yaml") as f:
 	config = yaml.load(f)
 
-def readimage(filepath, filterpercent = 0.2):
+def readimage(filepath, colors):
 	values = {}
 	adjusted_values = {}
 	source = Image.open(filepath)
@@ -20,22 +21,21 @@ def readimage(filepath, filterpercent = 0.2):
 		occurences = np.count_nonzero(cval==unique)
 		values[unique] = occurences
 	total = float(len(cval.flatten()))
-	filtervalue = total/(100/filterpercent)
-	if filtervalue > 0:
-		for key in values.keys():
-			if values[key] > filtervalue:
-				adjusted_values[key] = values[key]
-		for key in values.keys(): #Filters each color into the major color that it is mathematically nearest to.
-			if values[key] < filtervalue:
-				min_distance = 442 #The smallest integer that is larger than the maximum distance between two colors.
-				for primary in adjusted_values.keys():
-					colorp = ((primary >> 16) & 255, (primary >> 8) & 255, (primary) & 255)
-					colork = ((key >> 16) & 255, (key >> 8) & 255, (key) & 255)
-					distance = sqrt(((colorp[0]-colork[0])**2)+((colorp[1]-colork[1])**2)+((colorp[2]-colork[2])**2))
-					if distance < min_distance:
-						min_distance = distance
-						adjusted_color = primary
-				adjusted_values[adjusted_color] += 1
+	filtervalue = min(nlargest(colors, values.values()))
+	for key in values.keys():
+		if values[key] > filtervalue:
+			adjusted_values[key] = values[key]
+	for key in values.keys(): #Filters each color into the major color that it is mathematically nearest to.
+		if values[key] < filtervalue:
+			min_distance = 442 #The smallest integer that is larger than the maximum distance between two colors.
+			for primary in adjusted_values.keys():
+				colorp = ((primary >> 16) & 255, (primary >> 8) & 255, (primary) & 255)
+				colork = ((key >> 16) & 255, (key >> 8) & 255, (key) & 255)
+				distance = sqrt(((colorp[0]-colork[0])**2)+((colorp[1]-colork[1])**2)+((colorp[2]-colork[2])**2))
+				if distance < min_distance:
+					min_distance = distance
+					adjusted_color = primary
+			adjusted_values[adjusted_color] += 1
 	else:
 		return values, total
 	del(adjusted_values[16777215])
@@ -43,7 +43,13 @@ def readimage(filepath, filterpercent = 0.2):
 
 if __name__ == "__main__":
 	filename = raw_input("Enter the file path to count pixels for: ")
-	values, total = readimage(filename)
+	colors = raw_input("Enter number of colors: ")
+	try:
+		colors = int(colors)
+	except:
+		print "Please specify an integer number of colors!"
+		raise SystemExit
+	values, total = readimage(filename, colors)
 	sizes = []
 	labels = []
 	colors = []
