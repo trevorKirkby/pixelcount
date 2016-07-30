@@ -1,20 +1,22 @@
-import Image
+#!/usr/bin/env python
+
+import sys
+import os.path
+from PIL import Image
 import yaml
 import matplotlib.pyplot as plt
 import numpy as np
 from math import sqrt
-from os import path
 from heapq import nlargest
-
-with open("config.yaml") as f:
-	config = yaml.load(f)
 
 def readimage(filepath, colors):
 	values = {}
 	adjusted_values = {}
+	print 'loading'
 	source = Image.open(filepath)
 	data = np.array(source)
 	cval = (data[:,:,0].astype(np.uint32) << 16) | (data[:,:,1].astype(np.uint32) << 8) | data[:,:,2].astype(np.uint32)
+	print 'counting'
 	uniques = np.unique(cval)
 	values = {}
 	for unique in uniques:
@@ -22,6 +24,7 @@ def readimage(filepath, colors):
 		values[unique] = occurences
 	total = float(len(cval.flatten()))
 	filtervalue = min(nlargest(colors, values.values()))
+	print 'adjusting'
 	for key in values.keys():
 		if values[key] > filtervalue:
 			adjusted_values[key] = values[key]
@@ -42,31 +45,41 @@ def readimage(filepath, colors):
 	return adjusted_values, total
 
 if __name__ == "__main__":
-	filename = raw_input("Enter the file path to count pixels for: ")
-	colors = raw_input("Enter number of colors: ")
-	try:
-		colors = int(colors)
-	except:
-		print "Please specify an integer number of colors!"
-		raise SystemExit
+
+	with open("config.yaml") as f:
+		config = yaml.load(f)
+
+	name = sys.argv[1]
+	if name not in config:
+		print 'Invalid name: "{0}".'.format(name)
+		print 'Choose one of: {0}.'.format(config.keys())
+		sys.exit(-1)
+	config = config[name]
+
+	filename = os.path.join('maps', name + '.png')
+	colors = config['ncolors']
+	# Calculate the linear scale in meters per pixel.
+	linear_scale = float(config['scale_meters']) / config['scale_pixels']
+	# Calculate the corresponding area scale in hectares per pixel.
+	# 1 ha = (100 m)**2.
+	area_scale = (linear_scale / 100) ** 2
+	print 'Converting "{0}" with {1} colors and scale {2:.4g} ha / pix'.format(
+		name, colors, area_scale)
+
 	values, total = readimage(filename, colors)
+	print len(values)
+	sys.exit(0)
 	sizes = []
 	labels = []
 	colors = []
 	for element in values.keys():
 		sizes.append((float(values[element])/total)*100)
-		hectares = "{:.1f} ha".format(values[element]*config["scale"])
-		'''
-		if element in config["legend"].keys():
-			labels.append((str(config["legend"][element])+" : "+hectares))
-		else:
-			labels.append(("#"+str("%06x"%element)+" : "+hectares))
-		'''
+		hectares = "{:.1f} ha".format(values[element] * area_scale)
 		labels.append(hectares)
 		colors.append("#"+str("%06x"%element))
 	print colors
 	print labels
 	plt.pie(sizes, labels=labels, colors=colors,autopct="%1.1f%%",startangle=90)
 	plt.axis("equal")
-	plt.suptitle(path.splitext(filename)[0])
+	plt.suptitle(os.path.splitext(filename)[0])
 	plt.show()

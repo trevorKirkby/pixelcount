@@ -1,13 +1,4 @@
-# Area corresponding to 1 pixel in hectares
-scale: 5.07264e-06
-
-# Hex color codes (RRGGBB) and corresponding labels.
-legend:
-    0xECD240: Roads
-    0xAC2A0A: Corn
-    0xA16ADD: Maguey
-    0xA6A9A7: Settlements
-    0xA75B1C: Uncultivated
-    0x55585F: Fallow
-    0x72A6F6: Rivers
-    0x8BBE4D: Alfalfa
+Mitla Low All 1966:
+    scale_meters: 500
+    scale_pixels: 775
+    ncolors: 6
