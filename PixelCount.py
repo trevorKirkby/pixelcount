@@ -12,13 +12,6 @@ from heapq import nlargest
 with open("config.yaml") as f:
 	config = yaml.load(f)
 
-def count_pixels(filepath, total_colors):
-	source = Image.open(filepath)
-	pixels = np.array(source)
-	flattened = (data[:,:,0].astype(np.uint32) << 16) | (data[:,:,1].astype(np.uint32) << 8) | data[:,:,2].astype(np.uint32)
-	uniques = np.unique(flattened, return_counts = 1)
-	print uniques
-
 def readimage(filepath, colors):
 	values = {}
 	adjusted_values = {}
@@ -27,12 +20,9 @@ def readimage(filepath, colors):
 	cval = (data[:,:,0].astype(np.uint32) << 16) | (data[:,:,1].astype(np.uint32) << 8) | data[:,:,2].astype(np.uint32)
 	total = len(cval.flatten())
 	print 'loaded {0} pixels'.format(total)
-	uniques = np.unique(cval)
-	print 'found {0} unique colors'.format(len(uniques))
-	values = {}
-	for unique in uniques:
-		occurences = np.count_nonzero(cval==unique)
-		values[unique] = occurences
+	uniques = np.unique(cval, return_counts = 1)
+	print 'found {0} unique colors'.format(len(uniques[0]))
+	values = dict(zip(uniques[0], uniques[1]))
 	filtervalue = min(nlargest(colors + 1, values.values()))
 	print 'filtering to {0} colors with minvalue {1}'.format(colors, filtervalue)
 	for key in values.keys():
@@ -53,22 +43,17 @@ def readimage(filepath, colors):
 	del(adjusted_values[16777215])
 	return adjusted_values, total
 
-if __name__ == "__main__":
-
-	with open("config.yaml") as f:
-		config = yaml.load(f)
-
-	name = sys.argv[1]
+def pixel_counter(name):
 	if name not in config:
 		print 'Invalid name: "{0}".'.format(name)
 		print 'Choose one of: {0}.'.format(config.keys())
 		sys.exit(-1)
-	config = config[name]
+	map_config = config[name]
 
 	filename = os.path.join('maps', name + '.png')
-	colors = config['ncolors']
+	colors = map_config['ncolors']
 	# Calculate the linear scale in meters per pixel.
-	linear_scale = float(config['scale_meters']) / config['scale_pixels']
+	linear_scale = float(map_config['scale_meters']) / map_config['scale_pixels']
 	# Calculate the corresponding area scale in hectares per pixel.
 	# 1 ha = (100 m)**2.
 	area_scale = (linear_scale / 100) ** 2
@@ -87,8 +72,22 @@ if __name__ == "__main__":
 		hectares = "{:.3f} ha".format(values[element] * area_scale)
 		labels.append(hectares)
 		colors.append("#"+str("%06x"%element))
-	plt.pie(sizes, labels=labels, colors=colors,autopct="%1.1f%%",startangle=90)
+	patches, texts, autotexts = plt.pie(sizes, labels=labels, colors=colors,autopct="%1.1f%%",startangle=90)
+	for text in texts:
+		text.set_fontsize(9)
+	for text in autotexts:
+		text.set_fontsize(9)
 	plt.axis("equal")
 	plt.suptitle(name, fontsize='x-large')
 	plt.savefig(os.path.join('charts', name + '.png'))
-	plt.show()
+	if len(sys.argv) >= 3 and sys.argv[2] == "--display":
+		plt.show()
+	plt.clf()
+
+if __name__ == "__main__":
+	name = sys.argv[1]
+	if name == "ALL":
+		for mapfile in config.keys():
+			pixel_counter(mapfile)
+	else:
+		pixel_counter(name)
