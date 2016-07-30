@@ -12,21 +12,21 @@ from heapq import nlargest
 def readimage(filepath, colors):
 	values = {}
 	adjusted_values = {}
-	print 'loading'
 	source = Image.open(filepath)
 	data = np.array(source)
 	cval = (data[:,:,0].astype(np.uint32) << 16) | (data[:,:,1].astype(np.uint32) << 8) | data[:,:,2].astype(np.uint32)
-	print 'counting'
+	total = len(cval.flatten())
+	print 'loaded {0} pixels'.format(total)
 	uniques = np.unique(cval)
+	print 'found {0} unique colors'.format(len(uniques))
 	values = {}
 	for unique in uniques:
 		occurences = np.count_nonzero(cval==unique)
 		values[unique] = occurences
-	total = float(len(cval.flatten()))
-	filtervalue = min(nlargest(colors, values.values()))
-	print 'adjusting'
+	filtervalue = min(nlargest(colors + 1, values.values()))
+	print 'filtering to {0} colors with minvalue {1}'.format(colors, filtervalue)
 	for key in values.keys():
-		if values[key] > filtervalue:
+		if values[key] >= filtervalue:
 			adjusted_values[key] = values[key]
 	for key in values.keys(): #Filters each color into the major color that it is mathematically nearest to.
 		if values[key] < filtervalue:
@@ -39,8 +39,7 @@ def readimage(filepath, colors):
 					min_distance = distance
 					adjusted_color = primary
 			adjusted_values[adjusted_color] += 1
-	else:
-		return values, total
+	# Delete statistics for the background (white) area.
 	del(adjusted_values[16777215])
 	return adjusted_values, total
 
@@ -66,20 +65,19 @@ if __name__ == "__main__":
 	print 'Converting "{0}" with {1} colors and scale {2:.4g} ha / pix'.format(
 		name, colors, area_scale)
 
+	# Analyze the image pixel data.
 	values, total = readimage(filename, colors)
-	print len(values)
-	sys.exit(0)
+
+	# Display a pie chart of results.
 	sizes = []
 	labels = []
 	colors = []
 	for element in values.keys():
 		sizes.append((float(values[element])/total)*100)
-		hectares = "{:.1f} ha".format(values[element] * area_scale)
+		hectares = "{:.3f} ha".format(values[element] * area_scale)
 		labels.append(hectares)
 		colors.append("#"+str("%06x"%element))
-	print colors
-	print labels
 	plt.pie(sizes, labels=labels, colors=colors,autopct="%1.1f%%",startangle=90)
 	plt.axis("equal")
-	plt.suptitle(os.path.splitext(filename)[0])
+	plt.suptitle(name, fontsize='x-large')
 	plt.show()
