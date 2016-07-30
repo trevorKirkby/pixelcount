@@ -17,7 +17,7 @@ Mitla Low All 1966: { scale_meters: 500, scale_pixels: 775, ncolors: 5 }
 
 San Gab Mtn 1966: { scale_meters: 500, scale_pixels: 819, ncolors: 8 }
 San Gab Mtn 2016: { scale_meters: 500, scale_pixels: 819, ncolors: 6 }
-San Gab South Pied 1966: { scale_meters: 500, scale_pixels: 819, ncolors: 6 }
+San Gab South Pied 1966: { scale_meters: 500, scale_pixels: 819, ncolors: 5 }
 San Gab South Pied 1988: { scale_meters: 500, scale_pixels: 819, ncolors: 7 }
 San Gab South Pied 2016: { scale_meters: 500, scale_pixels: 819, ncolors: 8 }
 San Gab North Pied 1966: { scale_meters: 500, scale_pixels: 819, ncolors: 8 }
