@@ -1,3 +1,8 @@
+Ocotlan 1967 Zone A: { scale_meters: 100, scale_pixels: 453, ncolors: 7 }
+Ocotlan 2016 Zone A: { scale_meters: 100, scale_pixels: 453, ncolors: 6 }
+Ocotlan 1967 Zone B: { scale_meters: 100, scale_pixels: 453, ncolors: 6 }
+Ocotlan 2016 Zone B: { scale_meters: 100, scale_pixels: 453, ncolors: 4 }
+
 Mitla 1966 Piedmont: { scale_meters: 500, scale_pixels: 782, ncolors: 5 }
 Mitla 1988 Piedmont: { scale_meters: 500, scale_pixels: 782, ncolors: 6 }
 Mitla 2016 Piedmont: { scale_meters: 500, scale_pixels: 782, ncolors: 7 }
