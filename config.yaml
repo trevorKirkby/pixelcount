@@ -2,6 +2,10 @@ Mitla 1966 Piedmont: { scale_meters: 500, scale_pixels: 782, ncolors: 5 }
 Mitla 1988 Piedmont: { scale_meters: 500, scale_pixels: 782, ncolors: 6 }
 Mitla 2016 Piedmont: { scale_meters: 500, scale_pixels: 782, ncolors: 7 }
 
+Mitla HiAll 1966: { scale_meters: 500, scale_pixels: 784, ncolors: 6 }
+Mitla HiAll 1988: { scale_meters: 500, scale_pixels: 784, ncolors: 8 }
+Mitla HiAll 2016: { scale_meters: 500, scale_pixels: 784, ncolors: 8 }
+
 Mitla Low All 1966: { scale_meters: 500, scale_pixels: 775, ncolors: 6 }
 Mitla Low All 1966: { scale_meters: 500, scale_pixels: 775, ncolors: 6 }
 Mitla Low All 1966: { scale_meters: 500, scale_pixels: 775, ncolors: 5 }
