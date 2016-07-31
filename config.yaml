@@ -26,4 +26,4 @@ San Gab North Pied 2016: { scale_meters: 500, scale_pixels: 819, ncolors: 10 }
 Rio Sal Zone A 1968: { scale_meters: 100, scale_pixels: 276, ncolors: 6 }
 Rio Sal Zone A 2016: { scale_meters: 100, scale_pixels: 276, ncolors: 7 }
 Rio Sal Zone B 1968: { scale_meters: 100, scale_pixels: 276, ncolors: 5 }
-Rio Sal Zone A 2016: { scale_meters: 100, scale_pixels: 276, ncolors: 6 }
+Rio Sal Zone B 2016: { scale_meters: 100, scale_pixels: 276, ncolors: 6 }
