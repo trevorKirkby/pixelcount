@@ -33,3 +33,7 @@ Abasolo 2016: { scale_meters: 100, scale_pixels: 247, ncolors: 7 }
 
 Lambityeco 1966: { scale_meters: 200, scale_pixels: 297, ncolors: 7 }
 Lambityeco 2016: { scale_meters: 200, scale_pixels: 297, ncolors: 6 }
+
+Zaachila 1966: { scale_meters: 500, scale_pixels: 809, ncolors: 10 }
+Zaachila 1988: { scale_meters: 500, scale_pixels: 809, ncolors: 9 }
+Zaachila 2016: { scale_meters: 500, scale_pixels: 809, ncolors: 8 }
