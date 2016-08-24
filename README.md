@@ -21,3 +21,5 @@ the first includes the scanned map in the background, and the second only shows 
 * Commit and push.
 
 ## Run the pixelcount program
+
+* Add charts and commit.
