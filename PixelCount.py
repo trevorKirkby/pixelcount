@@ -40,7 +40,10 @@ def readimage(filepath, colors):
 					adjusted_color = primary
 			adjusted_values[adjusted_color] += 1
 	# Delete statistics for the background (white) area.
-	del(adjusted_values[16777215])
+	try:
+		del(adjusted_values[16777215])
+	except Exception, e:
+		print "No white pixels on the map: ", e
 	return adjusted_values, total
 
 def pixel_counter(name):
@@ -82,6 +85,8 @@ def pixel_counter(name):
 	plt.savefig(os.path.join('charts', name + '.png'))
 	if len(sys.argv) >= 3 and sys.argv[2] == "--display":
 		plt.show()
+		print colors
+		print labels
 	plt.clf()
 
 if __name__ == "__main__":
