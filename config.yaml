@@ -38,12 +38,12 @@ Zaachila 1966: { scale_meters: 500, scale_pixels: 809, ncolors: 10 }
 Zaachila 1988: { scale_meters: 500, scale_pixels: 809, ncolors: 9 }
 Zaachila 2016: { scale_meters: 500, scale_pixels: 809, ncolors: 8 }
 
-San Jose A 1968: { scale_meters: 200, scale_pixels: 728, ncolors: ? }
-San Jose A 2016: { scale_meters: 200, scale_pixels: 728, ncolors: ? }
-San Jose B 1968: { scale_meters: 200, scale_pixels: 737, ncolors: ? }
-San Jose B 1968: { scale_meters: 200, scale_pixels: 737, ncolors: ? }
+San Jose A 1968: { scale_meters: 200, scale_pixels: 728, ncolors: 4 }
+San Jose A 2016: { scale_meters: 200, scale_pixels: 728, ncolors: 4 }
+San Jose B 1968: { scale_meters: 200, scale_pixels: 737, ncolors: 5 }
+San Jose B 2016: { scale_meters: 200, scale_pixels: 737, ncolors: 7 }
 
-Zorita 1967: { scale_meters: 500, scale_pixels: 1028, ncolors: ? }
-Zorita 2016: { scale_meters: 500, scale_pixels: 1028, ncolors: ? }
+Zorita 1967: { scale_meters: 500, scale_pixels: 1028, ncolors: 11 }
+Zorita 2016: { scale_meters: 500, scale_pixels: 1028, ncolors: 8 }
 
 Consistency check: { scale_meters: 100, scale_pixels: 247, ncolors: 6 }
